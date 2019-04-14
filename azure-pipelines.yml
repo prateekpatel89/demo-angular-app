@@ -10,8 +10,14 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'your-container-image-name:$(build.buildId)'
+  dockerId: prateek1989  
+  imageName: 'demo-angular-app:$(build.buildId)'
+  dockerPassword: prateek1989
 
-steps:
-- script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
+steps:  
+- script:  |
+    docker build -f Dockerfile -t $(imageName) .
+    displayName: 'docker build'
+    docker login -u $(dockerId) -p $(pswd)
+  env:
+    pswd: $(dockerPassword)
